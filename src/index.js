@@ -4,12 +4,19 @@ console.log(data);
 const dogsList = document.querySelector(".dogs-list");
 const formButton = document.querySelector(".dogs-list__button--add");
 const main = document.querySelector(".main");
-function generateDogs() {
-  data.forEach((dog) => {
+
+function createDog(dog) {
     const li = document.createElement("li");
     li.classList.add("dogs-list__button");
     li.innerText = dog.name;
     dogsList.append(li);
+  
+    return li;
+  }
+
+function generateDogs() {
+  data.forEach((dog) => {
+    const li = createDog(dog)
     li.addEventListener("click", () => {
       const dogHtml = dogCard(dog);
       main.innerHTML = dogHtml;
@@ -50,14 +57,8 @@ formButton.addEventListener("click", () => {
       image: dogImage,
       bio: dogBio,
     };
-    // data.push(dogObject);
-    // dogsList.innerHTML = `
-    //   <li class="dogs-list__button dogs-list__button--add">+</li>
-    // `;
-    const li = document.createElement("li");
-    li.classList.add("dogs-list__button");
-    li.innerText = dogObject.name;
-    dogsList.append(li);
+    
+    const li = createDog(dogObject)
     li.addEventListener("click", () => {
       const dogHtml = dogCard(dogObject);
       main.innerHTML = dogHtml;
@@ -78,8 +79,7 @@ function dogCard(dog) {
                     ${dog.bio}
                 </p>
             </div class="main__dog-section__btn">
-            <p><em>Is naughty?</em> ${dog.isGoodDog ? "yes" : "no"}</p>
-            <button>Good dog!</button>
+            
             <p class='good-dog'><em>Is naughty?</em> ${
               dog.isGoodDog ? "yes" : "no"
             }</p>
@@ -104,7 +104,5 @@ function addForm() {
 }
 
 function buttonToggle(isGoodDog) {
-  // if isGoodDog === true, do something to the button
-  if (!isGoodDog) return "<button class='btn'>Good dog!</button>";
-  if (isGoodDog) return "<button class='btn'>Bad dog!</button>";
+    return  isGoodDog ? "<button class='btn'>Good dog!</button>" : "<button class='btn'>Bad dog!</button>";
 }
